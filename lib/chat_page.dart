@@ -4,8 +4,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'widgets/chat_bubble.dart';
 
-
-const apiKey = "***";
+const apiKey = "AIzaSyD3dqlu-l5Irc98mE-Dt7IDru-MdHethEw";
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -15,7 +14,6 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-
   final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
 
   TextEditingController messageController = TextEditingController();
@@ -25,8 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatBubble> chatBubbles = [
     const ChatBubble(
       direction: Direction.left,
-      message: 'Halo! saya E.L.A.N.G, asisten digital anda!',
-      photoUrl: 'https://i.pravatar.cc/150?img=47',
+      message: 'Halo! Apakah ada yang ingin dibantu?',
       type: BubbleType.alone,
     ),
   ];
@@ -36,14 +33,50 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         leading: CupertinoButton(
-          child: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
+          child: Image.asset("assets/img/arrow-left.png"),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('E.L.A.N.G Personal Assitant', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blueGrey,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white, shape: BoxShape.circle),
+                  child: Image.asset("assets/img/aibot.png"),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                const Column(
+                  children: [
+                    Text(
+                      "SiPandhu",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Plus Jakarta Sans',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      'Teman AI Anda',
+                      style: TextStyle(
+                        color: Color(0xFFFBC1B1),
+                        fontSize: 10,
+                        fontFamily: 'Plus Jakarta Sans',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Image.asset("assets/img/more.png")
+          ],
+        ),
+        backgroundColor: const Color(0xFFF6643C),
       ),
       body: Column(
         children: [
@@ -57,63 +90,61 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(16),
             child: Row(
-              children: [ 
+              children: [
                 Expanded(
-                  child: TextField(
-                    controller: messageController,
-                    decoration: const InputDecoration(
-                      hintText: 'Type a message...',
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: TextField(
+                      controller: messageController,
+                      decoration: const InputDecoration(
+                        hintText: 'Ketik Pesan',
+                      ),
                     ),
                   ),
                 ),
                 isLoading
                     ? const CircularProgressIndicator.adaptive()
                     : IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () async {
+                        icon: const Icon(Icons.send),
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                      setState(() {
-                        isLoading = true;
-                      });
+                          final content = [
+                            Content.text(messageController.text)
+                          ];
 
-                      final content = [
-                        Content.text(messageController.text)
-                      ];
+                          final GenerateContentResponse responseAi =
+                              await model.generateContent(content);
 
-                      final GenerateContentResponse responseAi = 
-                        await  model.generateContent(content);
+                          chatBubbles = [
+                            ...chatBubbles,
+                            ChatBubble(
+                                direction: Direction.right,
+                                message: messageController.text,
+                                photoUrl: null,
+                                type: BubbleType.alone)
+                          ]; //Bubblechat
 
-                      
-                      chatBubbles = [
-                        ...chatBubbles,
-                        ChatBubble(
-                          direction: Direction.right,
-                         message: messageController.text,
-                         photoUrl: null,
-                         type: BubbleType.alone
-                         )
-                      ]; //Bubblechat
+                          chatBubbles = [
+                            ...chatBubbles,
+                            ChatBubble(
+                                direction: Direction.left,
+                                message: responseAi.text ??
+                                    'Maaf, saay tidak mengerti',
+                                photoUrl: 'https://i.pravatar.cc/150?img=47',
+                                type: BubbleType.alone)
+                          ];
 
-                      chatBubbles = [
-                        ...chatBubbles,
-                        ChatBubble(
-                          direction: Direction.left,
-                         message: responseAi.text ??
-                         'Maaf, saay tidak mengerti',
-                         photoUrl: 'https://i.pravatar.cc/150?img=47',
-                         type: BubbleType.alone
-                         )
-                      ];
-
-                      messageController.clear();
-                      setState(() {
-                        isLoading = false;
-                      });
-
-                  },
-                ),
+                          messageController.clear();
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                      ),
               ],
             ),
           ),

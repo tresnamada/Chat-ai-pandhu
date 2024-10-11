@@ -16,12 +16,12 @@ enum Direction {
 
 class ChatBubble extends StatelessWidget {
   const ChatBubble({
-    Key? key,
+    super.key,
     required this.direction,
     required this.message,
     required this.type,
     this.photoUrl,
-  }) : super(key: key);
+  });
   final Direction direction;
   final String message;
   final String? photoUrl;

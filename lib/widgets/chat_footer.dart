@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class ChatFooter extends StatelessWidget {
   const ChatFooter({
-    Key? key,
+    super.key,
     required this.textController,
     required this.onSendMessage,
     this.padding,
-  }) : super(key: key);
+  });
 
   final TextEditingController textController;
   final Function() onSendMessage;
@@ -16,7 +16,8 @@ class ChatFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding ?? const EdgeInsets.only(left: 8, right: 8, bottom: 4, top: 4),
+      padding: padding ??
+          const EdgeInsets.only(left: 8, right: 8, bottom: 4, top: 4),
       child: Row(
         children: [
           Expanded(
@@ -29,9 +30,10 @@ class ChatFooter extends StatelessWidget {
                 maxLines: 3,
                 controller: textController,
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   isDense: true,
-                  fillColor: Colors.black12,
+                  fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
@@ -46,12 +48,12 @@ class ChatFooter extends StatelessWidget {
             ),
           ),
           CupertinoButton(
-            child: const Icon(
-              Icons.send_rounded,
-              size: 32,
-            ),
             padding: EdgeInsets.zero,
             onPressed: onSendMessage,
+            child: const Icon(
+              Icons.send_rounded,
+              size: 52,
+            ),
           )
         ],
       ),

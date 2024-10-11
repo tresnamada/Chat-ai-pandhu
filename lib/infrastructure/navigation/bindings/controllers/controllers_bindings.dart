@@ -1,0 +1,1 @@
+export 'package:flutter_chat_ai/infrastructure/navigation/bindings/controllers/test_screen.controller.binding.dart'; 
