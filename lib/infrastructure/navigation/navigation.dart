@@ -17,7 +17,7 @@ class EnvironmentsBadge extends StatelessWidget {
         ? Banner(
             location: BannerLocation.topStart,
             message: env!,
-            color: env == Environments.QAS ? Colors.blue : Colors.purple,
+            color: env == Environments.QAS ? Colors.blue : Colors.amber,
             child: child,
           )
         : SizedBox(child: child);

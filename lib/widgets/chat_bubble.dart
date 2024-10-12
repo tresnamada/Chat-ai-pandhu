@@ -63,7 +63,7 @@ class ChatBubble extends StatelessWidget {
         radius: 12,
       );
     }
-    return const SizedBox(width: 24);
+    return const SizedBox(width: 28);
   }
 
   BorderRadius _borderRadius(Direction dir, BubbleType type) {
@@ -114,7 +114,7 @@ class ChatBubble extends StatelessWidget {
                 bottomRight: radius1,
               );
       case BubbleType.alone:
-        return BorderRadius.circular(15);
+        return BorderRadius.circular(12);
     }
   }
 }
