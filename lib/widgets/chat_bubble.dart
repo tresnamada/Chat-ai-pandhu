@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'avatar.dart';
 
@@ -30,30 +31,27 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isOnLeft = direction == Direction.left;
-    return Row(
-      mainAxisAlignment:
-          isOnLeft ? MainAxisAlignment.start : MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        if (isOnLeft) _buildLeading(type),
-        SizedBox(width: isOnLeft ? 4 : 0),
-        Container(
-          constraints:
-              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: _borderRadius(direction, type),
-            color: isOnLeft ? Colors.grey[200] : Theme.of(context).primaryColor,
-          ),
-          child: Text(
-            message,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: isOnLeft ? Colors.black : Colors.white,
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment:
+            isOnLeft ? MainAxisAlignment.start : MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (isOnLeft) _buildLeading(type),
+          SizedBox(width: isOnLeft ? 4 : 0),
+          Container(
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.72),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: _borderRadius(direction, type),
+              color: isOnLeft ? Colors.white : Theme.of(context).primaryColor,
             ),
+            child: MarkdownBody(data: message),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

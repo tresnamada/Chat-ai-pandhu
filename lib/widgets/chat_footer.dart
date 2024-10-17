@@ -30,8 +30,10 @@ class ChatFooter extends StatelessWidget {
                 maxLines: 3,
                 controller: textController,
                 decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   isDense: true,
                   fillColor: Colors.white,
                   filled: true,

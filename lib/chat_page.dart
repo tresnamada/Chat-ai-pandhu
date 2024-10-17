@@ -4,7 +4,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 import 'widgets/chat_bubble.dart';
 
-const apiKey = "";
+const apiKey = "AIzaSyD3dqlu-l5Irc98mE-Dt7IDru-MdHethEw";
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -106,44 +106,58 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 isLoading
                     ? const CircularProgressIndicator.adaptive()
-                    : IconButton(
-                        icon: const Icon(Icons.send),
-                        onPressed: () async {
-                          setState(() {
-                            isLoading = true;
-                          });
+                    : Stack(
+                        children: [
+                          Container(
+                            width: 48,
+                            height: 48,
+                            decoration: ShapeDecoration(
+                                color: Color(0xFFF6643C),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(58))),
+                          ),
+                          IconButton(
+                            icon: const Image(
+                                image: AssetImage("assets/img/send-2.png")),
+                            onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
 
-                          final content = [
-                            Content.text(messageController.text)
-                          ];
+                              final content = [
+                                Content.text(messageController.text)
+                              ];
 
-                          final GenerateContentResponse responseAi =
-                              await model.generateContent(content);
+                              final GenerateContentResponse responseAi =
+                                  await model.generateContent(content);
 
-                          chatBubbles = [
-                            ...chatBubbles,
-                            ChatBubble(
-                                direction: Direction.right,
-                                message: messageController.text,
-                                photoUrl: null,
-                                type: BubbleType.alone)
-                          ]; //Bubblechat
+                              chatBubbles = [
+                                ...chatBubbles,
+                                ChatBubble(
+                                    direction: Direction.right,
+                                    message: messageController.text,
+                                    photoUrl: null,
+                                    type: BubbleType.alone)
+                              ]; //Bubblechat
 
-                          chatBubbles = [
-                            ...chatBubbles,
-                            ChatBubble(
-                                direction: Direction.left,
-                                message: responseAi.text ??
-                                    'Maaf, saay tidak mengerti',
-                                photoUrl: 'https://i.pravatar.cc/150?img=47',
-                                type: BubbleType.alone)
-                          ];
+                              chatBubbles = [
+                                ...chatBubbles,
+                                ChatBubble(
+                                    direction: Direction.left,
+                                    message: responseAi.text ??
+                                        'Maaf, saay tidak mengerti',
+                                    photoUrl:
+                                        'https://i.pravatar.cc/150?img=47',
+                                    type: BubbleType.alone)
+                              ];
 
-                          messageController.clear();
-                          setState(() {
-                            isLoading = false;
-                          });
-                        },
+                              messageController.clear();
+                              setState(() {
+                                isLoading = false;
+                              });
+                            },
+                          ),
+                        ],
                       ),
               ],
             ),
