@@ -38,8 +38,8 @@ class ChatFooter extends StatelessWidget {
                   fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(
+                    borderRadius:    BorderRadius.circular(20.0),
+                    borderSide: const          BorderSide(
                       width: 0,
                       style: BorderStyle.none,
                     ),
